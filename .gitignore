@@ -1,27 +1,47 @@
-# Python
+# ─── Python ────────────────────────────────────────
 __pycache__/
 *.py[cod]
+*.pyo
 *.egg-info/
+*.egg
 .venv/
 venv/
 .pytest_cache/
+htmlcov/
+.coverage
+*.whl
 
-# Node
+# ─── Node ──────────────────────────────────────────
 node_modules/
 dist/
+.cache/
 
-# Generated MIDI files
+# ─── Generated files ──────────────────────────────
 backend/generated/*.mid
 
-# IDE
+# ─── Environment / Secrets ────────────────────────
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+credentials.json
+service-account.json
+
+# ─── IDE ───────────────────────────────────────────
 .vscode/
 .idea/
 *.swp
+*.swo
+*~
 
-# OS
+# ─── OS ────────────────────────────────────────────
 .DS_Store
 Thumbs.db
 
-# Env
-.env
-.env.local
+# ─── Docker ────────────────────────────────────────
+docker-compose.override.yml
+
+# ─── Logs ──────────────────────────────────────────
+*.log
+npm-debug.log*

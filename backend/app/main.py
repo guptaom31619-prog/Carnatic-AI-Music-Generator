@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
@@ -12,11 +13,16 @@ from app.models.generation import GenerateRequest, GenerateResponse
 
 GENERATED_DIR = Path(__file__).resolve().parent.parent / "generated"
 
+CORS_ORIGINS = os.getenv(
+    "CORS_ORIGINS",
+    "http://localhost:5173,http://localhost:3000",
+).split(",")
+
 app = FastAPI(title="Carnatic AI Composer API", version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
