@@ -1,0 +1,138 @@
+.card {
+  background: linear-gradient(135deg, rgba(124, 106, 247, 0.08), rgba(255, 170, 100, 0.06));
+  border: 1px solid rgba(124, 106, 247, 0.2);
+  border-radius: 16px;
+  padding: 20px 24px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  backdrop-filter: blur(12px);
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.instrumentBadge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(124, 106, 247, 0.15);
+  color: var(--accent-light);
+  border: 1px solid rgba(124, 106, 247, 0.25);
+}
+
+.tempoInfo {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  font-family: var(--font);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.play {
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(124, 106, 247, 0.3);
+}
+
+.play:hover:not(:disabled) {
+  box-shadow: 0 4px 20px rgba(124, 106, 247, 0.5);
+  transform: translateY(-1px);
+}
+
+.stop {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.stop:hover:not(:disabled) {
+  color: #f87171;
+  border-color: #f87171;
+  background: rgba(248, 113, 113, 0.08);
+}
+
+/* ── Progress ── */
+.progressTrack {
+  height: 3px;
+  border-radius: 3px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  transition: width 0.15s ease-out;
+}
+
+/* ── Note strip ── */
+.noteStrip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.notePill {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: all 0.12s;
+}
+
+.notePill.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(124, 106, 247, 0.5);
+  transform: scale(1.15);
+}
+
+.notePill.played {
+  color: var(--text-secondary);
+  border-color: rgba(124, 106, 247, 0.2);
+  background: rgba(124, 106, 247, 0.06);
+}
