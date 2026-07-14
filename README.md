@@ -47,7 +47,7 @@ Browser
 ### Prerequisites
 
 - Python 3.11+
-- Node.js 20+
+- Node.js 22+
 - `make` (optional but recommended)
 
 ### With Make
@@ -178,7 +178,7 @@ make test
 GitHub Actions runs on every push and PR to `main`:
 
 - **Backend** — Python 3.11, install deps, `pytest`
-- **Frontend** — Node 20, `npm ci`, production `vite build`
+- **Frontend** — Node 22, `npm ci`, production `vite build`
 - **CI Passed** — aggregate gate so the branch status stays green only when both pass
 
 ---
