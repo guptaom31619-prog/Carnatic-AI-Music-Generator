@@ -1,7 +1,8 @@
 {
-  "name": "carnatic-music-ai",
+  "name": "carnatic-ai-music-generator",
   "version": "0.1.0",
   "private": true,
+  "description": "Demo: Carnatic raga melody generator with FastAPI + React + Tone.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

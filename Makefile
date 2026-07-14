@@ -11,7 +11,7 @@ install-frontend:
 
 # ─── Run ──────────────────────────────────────────────
 run: stop
-	@echo "Starting Carnatic AI Music Generator..."
+	@echo "Starting Carnatic AI Music Generator (demo)..."
 	@cd backend && uvicorn app.main:app --reload &
 	@sleep 2
 	@cd frontend && npm run dev &

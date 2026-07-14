@@ -18,6 +18,8 @@ dist/
 
 # ─── Generated files ──────────────────────────────
 backend/generated/*.mid
+backend/generated/*.midi
+!backend/generated/.gitkeep
 
 # ─── Environment / Secrets ────────────────────────
 .env

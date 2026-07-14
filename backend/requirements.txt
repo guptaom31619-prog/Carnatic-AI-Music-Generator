@@ -1,7 +1,5 @@
 fastapi
 uvicorn[standard]
-music21
-numpy
 mido
 python-multipart
 pytest

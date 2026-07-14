@@ -1,114 +1,89 @@
 # Carnatic AI Music Generator
 
-A full-stack AI-powered Carnatic music composition tool. Generate melodies from Carnatic ragas, play preset tunes (Happy Birthday, Jana Gana Mana, Ode to Joy, and more), and download MIDI files — all in the browser.
+> Demo: generate Carnatic raga-based melodies, play preset tunes in the browser, and download MIDI — FastAPI + React + Tone.js.
+
+[![CI](https://github.com/guptaom31619-prog/Carnatic-AI-Music-Generator/actions/workflows/ci.yml/badge.svg)](https://github.com/guptaom31619-prog/Carnatic-AI-Music-Generator/actions/workflows/ci.yml)
+[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-backend-009688.svg)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-18-61DAFB.svg)](https://react.dev/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+**Status:** portfolio / demo project — not a production SaaS. Built to show raga-constrained melody generation, MIDI export, and browser playback with Tone.js.
 
 ---
 
-## Stack
-
-| Layer    | Tech                              |
-|----------|-----------------------------------|
-| Backend  | Python 3.11+, FastAPI, mido       |
-| Frontend | React 18, Vite 5, Tone.js         |
-| Testing  | pytest (36 tests), Vite build     |
-| CI/CD    | GitHub Actions                    |
-| Infra    | Docker Compose (optional)         |
-
----
-
-## Project Structure
+## How it works
 
 ```
-.
-├── backend/
-│   ├── app/
-│   │   ├── main.py            # FastAPI app + all routes
-│   │   ├── generator.py       # Melody generation service
-│   │   ├── ragas.py           # Raga definitions + swara mapping
-│   │   ├── instruments.py     # Instrument → MIDI program map
-│   │   ├── midi_utils.py      # MIDI file construction (mido)
-│   │   ├── presets.py         # 10 preset tunes
-│   │   └── models/
-│   │       └── generation.py  # Pydantic request/response schemas
-│   ├── tests/                 # 36 pytest tests
-│   ├── generated/             # MIDI output (git-ignored)
-│   ├── requirements.txt
-│   ├── Dockerfile
-│   └── .env.example
-├── frontend/
-│   ├── src/
-│   │   ├── App.jsx            # Main UI (tabs, controls, results)
-│   │   ├── api.js             # API client (env-aware)
-│   │   └── components/
-│   │       └── Player.jsx     # Tone.js playback with instrument synths
-│   ├── index.html
-│   ├── vite.config.js
-│   ├── package.json
-│   ├── Dockerfile
-│   └── .env.example
-├── .github/workflows/ci.yml   # CI pipeline
-├── docker-compose.yml
-├── Makefile
-└── .gitignore
+Browser
+  └─► React UI  (Vite · Tone.js · :5173)
+        └─► FastAPI  (:8000)
+              ├─► Raga / instrument / preset APIs
+              ├─► Melody generator (raga-constrained notes)
+              └─► MIDI writer (mido) → downloadable .mid
 ```
+
+- Melodies are constrained to the selected Carnatic raga's allowed swaras.
+- Presets ship ready-made tunes (national songs, classical phrases, nursery melodies).
+- Playback runs entirely in the browser via Tone.js synths (no audio server required).
 
 ---
 
 ## Features
 
-### Raga Generator
-- 4 Carnatic ragas: Shankarabharanam, Kalyani, Mohanam, Hamsadhwani
-- 5 instruments: Veena, Violin, Flute, Mridangam, Piano
-- Adjustable tempo (60–140 BPM) and length (16–64 notes)
-- Downloads generated MIDI files
-
-### Preset Tunes
-- Happy Birthday, Twinkle Twinkle, Ode to Joy
-- Jana Gana Mana, Vande Mataram, Saare Jahan Se Accha
-- Raghupati Raghav Raja Ram
-- Sa Re Ga Ma Scale, Mohanam Alapana, Kalyani Varnam
-
-### Browser Playback
-- Tone.js-powered synthesizer
-- Unique synth timbre per instrument (PluckSynth, FMSynth, MembraneSynth, etc.)
-- Progress bar and active note highlighting
+| Area | What you get |
+|------|----------------|
+| **Raga generator** | Shankarabharanam, Kalyani, Mohanam, Hamsadhwani |
+| **Instruments** | Veena, Violin, Flute, Mridangam, Piano |
+| **Controls** | Tempo 60–140 BPM, length 16–64 notes |
+| **Presets** | Happy Birthday, Jana Gana Mana, Ode to Joy, and more |
+| **Export** | Download generated MIDI files |
+| **Playback** | Tone.js synths with per-instrument timbres |
 
 ---
 
-## Getting Started
+## Quick start
 
 ### Prerequisites
 
 - Python 3.11+
 - Node.js 20+
+- `make` (optional but recommended)
 
-### Quick Start (Makefile)
-
-```bash
-make install   # Install all dependencies
-make run       # Start backend + frontend
-```
-
-- Frontend → http://localhost:5173
-- Backend  → http://localhost:8000
-- API Docs → http://localhost:8000/docs
+### With Make
 
 ```bash
-make stop      # Stop all servers
-make test      # Run all tests
-make clean     # Full cleanup
+git clone https://github.com/guptaom31619-prog/Carnatic-AI-Music-Generator.git
+cd Carnatic-AI-Music-Generator
+
+make install
+make run
 ```
 
-### Manual Start
+| Service | URL |
+|---------|-----|
+| Frontend | http://localhost:5173 |
+| Backend API | http://localhost:8000 |
+| API docs | http://localhost:8000/docs |
 
-**Backend:**
+```bash
+make test    # pytest + frontend production build
+make stop    # stop local servers
+make clean   # remove caches, generated MIDI, node_modules
+```
+
+### Manual
+
+**Backend**
+
 ```bash
 cd backend
 pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-**Frontend:**
+**Frontend**
+
 ```bash
 cd frontend
 npm install
@@ -118,48 +93,71 @@ npm run dev
 ### Docker Compose
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 ---
 
-## Environment Variables
+## Project structure
 
-No secrets are hardcoded. All configuration is via environment variables with safe defaults.
+```
+Carnatic-AI-Music-Generator/
+├── backend/
+│   ├── app/
+│   │   ├── main.py              # FastAPI routes
+│   │   ├── generator.py         # Raga-constrained melody generation
+│   │   ├── ragas.py             # Raga definitions + swara mapping
+│   │   ├── instruments.py       # Instrument → MIDI program map
+│   │   ├── midi_utils.py        # MIDI file construction (mido)
+│   │   ├── presets.py           # Built-in preset tunes
+│   │   └── models/              # Pydantic request/response schemas
+│   ├── tests/                   # pytest suite
+│   ├── generated/               # MIDI output (gitignored)
+│   ├── requirements.txt
+│   └── Dockerfile
+├── frontend/
+│   ├── src/
+│   │   ├── App.jsx              # Main UI
+│   │   ├── api.js               # API client
+│   │   └── components/Player.jsx # Tone.js playback
+│   ├── package.json
+│   └── Dockerfile
+├── .github/workflows/ci.yml     # Backend tests + frontend build
+├── docker-compose.yml
+├── Makefile
+└── LICENSE
+```
 
-| Variable       | Where     | Default                                     | Description                       |
-|----------------|-----------|---------------------------------------------|-----------------------------------|
-| `CORS_ORIGINS` | Backend   | `http://localhost:5173,http://localhost:3000`| Comma-separated allowed origins   |
-| `VITE_API_URL` | Frontend  | `http://localhost:8000`                     | Backend API URL (build-time)      |
+---
 
-Copy `.env.example` files to `.env` and adjust for your deployment:
+## Environment
+
+No secrets required. Optional overrides:
+
+| Variable | Where | Default | Description |
+|----------|-------|---------|-------------|
+| `CORS_ORIGINS` | Backend | `http://localhost:5173,http://localhost:3000` | Allowed CORS origins |
+| `VITE_API_URL` | Frontend | `http://localhost:8000` | Backend URL (Vite build-time) |
 
 ```bash
 cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env
 ```
 
-### Deployment Notes
-
-- For **Vercel** (frontend): Set `VITE_API_URL` in the Vercel project environment settings
-- For **GCP / AWS / Railway** (backend): Set `CORS_ORIGINS` to your frontend's deployed URL
-- No API keys, tokens, or credentials are used in this project
-
 ---
 
-## API Endpoints
+## API
 
-| Method | Path                | Description                          |
-|--------|---------------------|--------------------------------------|
-| GET    | `/`                 | Health check                         |
-| GET    | `/ragas`            | List available ragas                 |
-| GET    | `/instruments`      | List available instruments           |
-| GET    | `/presets`          | List all preset tunes                |
-| GET    | `/presets/{id}`     | Get preset detail with notes         |
-| GET    | `/download/{file}`  | Download a generated MIDI file       |
-| POST   | `/generate`         | Generate a MIDI composition          |
+| Method | Path | Description |
+|--------|------|-------------|
+| `GET` | `/` | Health check |
+| `GET` | `/ragas` | List ragas |
+| `GET` | `/instruments` | List instruments |
+| `GET` | `/presets` | List presets |
+| `GET` | `/presets/{id}` | Preset detail + notes |
+| `GET` | `/download/{file}` | Download MIDI |
+| `POST` | `/generate` | Generate a composition |
 
-**POST /generate** body:
 ```json
 {
   "raga": "Mohanam",
@@ -171,31 +169,20 @@ cp frontend/.env.example frontend/.env
 
 ---
 
-## Testing
+## Testing & CI
 
 ```bash
 make test
 ```
 
-Runs:
-- **Backend**: 36 pytest tests (ragas, instruments, presets, MIDI utils, generator, API routes)
-- **Frontend**: Production build check (Vite)
-
----
-
-## CI/CD
-
 GitHub Actions runs on every push and PR to `main`:
-- **Backend job**: Python 3.11, installs deps, runs pytest
-- **Frontend job**: Node 20, installs deps, runs production build
+
+- **Backend** — Python 3.11, install deps, `pytest`
+- **Frontend** — Node 20, `npm ci`, production `vite build`
+- **CI Passed** — aggregate gate so the branch status stays green only when both pass
 
 ---
 
-## Roadmap
+## License
 
-- [ ] AI/ML-based phrase generation (Markov chains, RNN)
-- [ ] Tala (rhythm cycle) support
-- [ ] In-browser MIDI file playback (Web MIDI API)
-- [ ] Export to WAV / MP3
-- [ ] More ragas and instruments
-- [ ] User accounts and saved compositions
+MIT — see [LICENSE](LICENSE).
